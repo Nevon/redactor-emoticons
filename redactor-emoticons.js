@@ -4,11 +4,14 @@
  * https://github.com/Nevon/redactor-emoticons
  */
 
-if (typeof RedactorPlugins === 'undefined') var RedactorPlugins = {};
+if (typeof RedactorPlugins === 'undefined') {
+	var RedactorPlugins = {};
+}
+
 RedactorPlugins.emoticons = {
 	init: function() {
-
-		if (typeof(RLANG.emoticons) == 'undefined') {
+		"use strict";
+		if (typeof(RLANG.emoticons) === 'undefined') {
 			RLANG.emoticons = 'Insert emoticon';
 		}
 		
@@ -16,7 +19,7 @@ RedactorPlugins.emoticons = {
 		 * Create the button. When clicked either show 
 		 * modal or replace smilies in selected text.
 		 */
-		this.addBtn('emoticons', RLANG.emoticons, function(redactor, event) {
+		this.addBtn('emoticons', RLANG.emoticons, function(redactor) {
 			if (redactor.getSelectedHtml().length === 0 || redactor.replaceSmileys(redactor) === 0) {
 				redactor.createModal(redactor);
 			}
@@ -35,10 +38,11 @@ RedactorPlugins.emoticons = {
 		});
 	},
 	createModal: function(redactor) {
+		"use strict";
 		var modal = '<div id="emoticon_drawer"><ul style="margin: 0; padding: 10px 10px;">';
 
 		for (var i = 0; i < this.opts.emoticons.length; i++) {
-			modal += '<li style="display: inline; margin: 5px;"><img src="'+this.opts.emoticons[i].src+'" alt="'+this.opts.emoticons[i].name+'" title="'+this.opts.emoticons[i].shortcode+'" style="cursor:pointer;"></li>';
+			modal += '<li style="display: inline-block; padding: 5px;"><img src="'+this.opts.emoticons[i].src+'" alt="'+this.opts.emoticons[i].name+'" title="'+this.opts.emoticons[i].shortcode+'" style="cursor:pointer;"></li>';
 		}
 
 		modal += '</ul></div>';
@@ -55,13 +59,19 @@ RedactorPlugins.emoticons = {
 	 * @return int The number of smilies replaced
 	 */
 	replaceSmileys: function(redactor) {
+		"use strict";
 		var html = redactor.getSelectedHtml();
 		var numberOfMatches = 0;
 
 		//Replace all smileys within selected text.
 		for (var i = 0; i < this.opts.emoticons.length; i++) {
+			//Take the shortcode and escape any characters that have
+			//special meaning in regexp.
 			var smileyStr = (this.opts.emoticons[i].shortcode+'').replace(/([\\\.\+\*\?\[\^\]\$\(\)\{\}\=\!\<\>\|\:])/g, "\\$1");
-			var pattern = RegExp('('+smileyStr+')', 'g');
+			var pattern = new RegExp('('+smileyStr+')', 'g');
+			
+			//Perform the match twice. Once to count number of
+			//occurrences, and once to do the replace. 
 			numberOfMatches += (html.match(pattern) || []).length;
 			html = html.replace(pattern, '<img src="'+this.opts.emoticons[i].src+'" alt="'+this.opts.emoticons[i].name+'">');
 		}
@@ -70,4 +80,4 @@ RedactorPlugins.emoticons = {
 
 		return numberOfMatches;
 	}
-}
+};
