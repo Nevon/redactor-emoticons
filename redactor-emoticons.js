@@ -13,6 +13,7 @@ RedactorPlugins.emoticons = {
 		"use strict";
 		if (typeof(RLANG.emoticons) === 'undefined') {
 			RLANG.emoticons = 'Insert emoticon';
+			RLANG.emoticons_help = 'Hover over an emoticon to see its shortcode. Type in the shortcode, select the text and press the emoticon button to convert it automatically.';
 		}
 		
 		/*
@@ -39,13 +40,15 @@ RedactorPlugins.emoticons = {
 	},
 	createModal: function(redactor) {
 		"use strict";
-		var modal = '<div id="emoticon_drawer"><ul style="margin: 0; padding: 10px 10px;">';
+		var modal = '<div id="emoticon_drawer" style="padding: 10px;"><ul style="margin: 0; padding: 0;">';
 
 		for (var i = 0; i < this.opts.emoticons.length; i++) {
 			modal += '<li style="display: inline-block; padding: 5px;"><img src="'+this.opts.emoticons[i].src+'" alt="'+this.opts.emoticons[i].name+'" title="'+this.opts.emoticons[i].shortcode+'" style="cursor:pointer;"></li>';
 		}
 
-		modal += '</ul></div>';
+		modal += '</ul>';
+		modal += '<small class="redactor-emoticon-help">'+RLANG.emoticons_help+'</small>';
+		modal += '</div>';
 
 		this.modalInit(RLANG.emoticons, modal, 300, function() {
 			$('#emoticon_drawer img').click(function() {
