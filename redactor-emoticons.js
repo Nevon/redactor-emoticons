@@ -13,6 +13,8 @@ RedactorPlugins.emoticons = {
 		"use strict";
 		if (typeof(RLANG.emoticons) === 'undefined') {
 			RLANG.emoticons = 'Insert emoticon';
+		}
+		if (typeof(RLANG.emoticons_help) === 'undefined') {
 			RLANG.emoticons_help = 'Hover over an emoticon to see its shortcode. Type in the shortcode, select the text and press the emoticon button to convert it automatically.';
 		}
 		
