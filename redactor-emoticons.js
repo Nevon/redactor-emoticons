@@ -54,6 +54,7 @@ RedactorPlugins.emoticons = {
 			$('#emoticon_drawer img').click(function() {
 				redactor.setBuffer();
 				redactor.insertHtml('<img src="'+$(this).attr('src')+'" alt="'+$(this).attr('alt')+'">');
+				redactor.modalClose();
 			});
 		});
 	},
