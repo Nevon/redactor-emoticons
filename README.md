@@ -13,7 +13,8 @@ Add the plugin to the `plugins` option and your emoticons to the `emoticons` opt
     $('#redactor-editor').redactor({
         'plugins' : ['emoticons'],
         'emoticons' : [
-            {
+		  viewType: 'modal',
+          items: {
                 'name': 'Happy',
                 'src' : 'img/face-smile.png',
                 'shortcode' : ':)'
@@ -29,7 +30,7 @@ Add the plugin to the `plugins` option and your emoticons to the `emoticons` opt
 `name` is simply used as an ALT-attribute.
 `src` is the URL to use to display the emoticon.
 `shortcode` - To quickly add an emoticon, type the corresponding shortcode, select it and press the emoticon button. Any selected text that matches a shortcode will be replaced with the corresponding image.
-
+'viewType' - Changes the smile output view, default option is 'modal', also aviable 'dropdown' view
 ##Usage
 
 Click on the emoticon button to get a modal window with all your emoticons.
