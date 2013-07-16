@@ -12,9 +12,9 @@ Add the plugin to the `plugins` option and your emoticons to the `emoticons` opt
 
     $('#redactor-editor').redactor({
         'plugins' : ['emoticons'],
-        'emoticons' : [
-		  viewType: 'modal',
-          items: {
+        'emoticons' : {
+            viewType: 'modal',
+            items: [{
                 'name': 'Happy',
                 'src' : 'img/face-smile.png',
                 'shortcode' : ':)'
@@ -23,8 +23,8 @@ Add the plugin to the `plugins` option and your emoticons to the `emoticons` opt
                 'name': 'Sad',
                 'src' : 'img/face-sad.png',
                 'shortcode' : ':('
-            },
-        ]
+            }],
+        }
     });
 
 `name` is simply used as an ALT-attribute.
