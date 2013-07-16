@@ -27,7 +27,7 @@ RedactorPlugins.emoticons = {
                 var mylist = {};
                 for (var i = 0; i < this.opts.emoticons.items.length; i++) {
                     mylist[this.opts.emoticons.items[i].name] = {
-                        title: '<img data-code="' + this.opts.emoticons.items[i].code + '" src="' + this.opts.emoticons.items[i].src + '" alt="' + this.opts.emoticons.items[i].name + '" title="' + this.opts.emoticons.items[i].shortcode + '" style="cursor:pointer;">',
+                        title: '<img data-code="' + this.opts.emoticons.items[i].shortcode + '" src="' + this.opts.emoticons.items[i].src + '" alt="' + this.opts.emoticons.items[i].name + '" title="' + this.opts.emoticons.items[i].shortcode + '" style="cursor:pointer;">',
                         callback: function(buttonName, buttonDOM, buttonObj) {
                             that.chooseSmile(buttonName, buttonDOM, buttonObj);
                         },
