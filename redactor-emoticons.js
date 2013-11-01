@@ -20,7 +20,9 @@ RedactorPlugins.emoticons = {
         }
 
         var that = this;
-        
+
+        var buttonOpts = this.opts.emoticons.button || {};
+
         // choose the view type: modal window or dropdown box
         switch (this.opts.emoticons.viewType) {
             case 'dropdown':
@@ -34,21 +36,41 @@ RedactorPlugins.emoticons = {
                         className: 'redactor_smile'
                     }
                 }
-                this.buttonAdd('emoticons', RLANG.emoticons, null, mylist
-                        );
+
+                if (buttonOpts.addAfter) {
+                    this.buttonAddAfter(buttonOpts.addAfter, 'emoticons', RLANG.emoticons, null, mylist);
+                } else if (buttonOpts.addBefore) {
+                    this.buttonAddBefore(buttonOpts.addBefore, 'emoticons', RLANG.emoticons, null, mylist);
+                } else {
+                    this.buttonAdd('emoticons', RLANG.emoticons, null, mylist);
+                }
+
                 break
             default:
-                this.buttonAdd('emoticons', RLANG.emoticons, function() {
-                    if (that.replaceSmileys() === 0) {
-                        that.createModal();
-                    }
-                });
+                var callback = function() {
+                  if (that.replaceSmileys() === 0) {
+                    that.createModal();
+                  }
+                }
+
+                if (buttonOpts.addAfter) {
+                    this.buttonAddAfter(buttonOpts.addAfter, 'emoticons', RLANG.emoticons, callback)
+                } else if (buttonOpts.addBefore) {
+                    this.buttonAddBefore(buttonOpts.addBefore, 'emoticons', RLANG.emoticons, callback);
+                } else {
+                    this.buttonAdd('emoticons', RLANG.emoticons, callback);
+                }
         }
 
-     
-
         //Add a separator before the button
-        this.buttonAddSeparatorAfter('emoticons');
+        if (buttonOpts.separatorBefore) {
+            this.buttonAddSeparatorBefore('emoticons')
+        }
+
+        //Add a separator after the button
+        if (buttonOpts.separatorAfter) {
+            this.buttonAddSeparatorAfter('emoticons');
+        }
 
         //Add icon to button
         $('a.redactor_btn_emoticons').css({

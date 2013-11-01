@@ -24,6 +24,11 @@ Add the plugin to the `plugins` option and your emoticons to the `emoticons` opt
                 'src' : 'img/face-sad.png',
                 'shortcode' : ':('
             }],
+            button: {
+              addBefore: 'bold'
+              separatorBefore: true
+              separatorAfter: true
+            }
         }
     });
 
@@ -31,6 +36,8 @@ Add the plugin to the `plugins` option and your emoticons to the `emoticons` opt
 `src` is the URL to use to display the emoticon.  
 `shortcode` - To quickly add an emoticon, type the corresponding shortcode, select it and press the emoticon button. Any selected text that matches a shortcode will be replaced with the corresponding image.  
 `viewType` - Changes the UI for the emoticons. Default option is `modal`, also available is a `dropdown` view.
+`button.addBefore`, `button.addAfter` – Set button before or after which emoticons button should be added
+`button.separatorBefore`, `button.separatorAfter` – Set to add separator before and / or after emoticons button
 
 ##Usage
 
