@@ -97,7 +97,7 @@ RedactorPlugins.emoticons = {
         this.modalInit(RLANG.emoticons, modal, 300, function() {
             $('#emoticon_drawer img').click(function() {
                 that.bufferSet();
-                that.insertHtml('<img src="' + $(this).attr('src') + '" alt="' + $(this).attr('alt') + '">');
+                that.insertHtml('<img src="' + $(this).attr('src') + '" alt="' + $(this).attr('alt') + '" title="' + $(this).attr('title') + '">');
                 that.modalClose();
             });
         });
