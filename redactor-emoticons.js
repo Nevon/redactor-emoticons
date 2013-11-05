@@ -3,7 +3,6 @@
  * Copyright (c) 2013 Tommy Brunn (tommy.brunn@gmail.com)
  * https://github.com/Nevon/redactor-emoticons
  */
-var RLANG = {};
 
 if (typeof RedactorPlugins === 'undefined') {
     var RedactorPlugins = {};
@@ -12,11 +11,12 @@ if (typeof RedactorPlugins === 'undefined') {
 RedactorPlugins.emoticons = {
     init: function() {
         "use strict";
-        if (typeof(RLANG.emoticons) === 'undefined') {
-            RLANG.emoticons = 'Insert emoticon';
+
+        if (typeof(this.opts.curLang.emoticons) === 'undefined') {
+            this.opts.curLang.emoticons = 'Insert emoticon';
         }
-        if (typeof(RLANG.emoticons_help) === 'undefined') {
-            RLANG.emoticons_help = 'Hover over an emoticon to see its shortcode. Type in the shortcode, select the text and press the emoticon button to convert it automatically.';
+        if (typeof(this.opts.curLang.emoticons_help) === 'undefined') {
+            this.opts.curLang.emoticons_help = 'Hover over an emoticon to see its shortcode. Type in the shortcode, select the text and press the emoticon button to convert it automatically.';
         }
 
         var that = this;
@@ -38,11 +38,11 @@ RedactorPlugins.emoticons = {
                 }
 
                 if (buttonOpts.addAfter) {
-                    this.buttonAddAfter(buttonOpts.addAfter, 'emoticons', RLANG.emoticons, null, mylist);
+                    this.buttonAddAfter(buttonOpts.addAfter, 'emoticons', this.opts.curLang.emoticons, null, mylist);
                 } else if (buttonOpts.addBefore) {
-                    this.buttonAddBefore(buttonOpts.addBefore, 'emoticons', RLANG.emoticons, null, mylist);
+                    this.buttonAddBefore(buttonOpts.addBefore, 'emoticons', this.opts.curLang.emoticons, null, mylist);
                 } else {
-                    this.buttonAdd('emoticons', RLANG.emoticons, null, mylist);
+                    this.buttonAdd('emoticons', this.opts.curLang.emoticons, null, mylist);
                 }
 
                 break
@@ -54,11 +54,11 @@ RedactorPlugins.emoticons = {
                 }
 
                 if (buttonOpts.addAfter) {
-                    this.buttonAddAfter(buttonOpts.addAfter, 'emoticons', RLANG.emoticons, callback)
+                    this.buttonAddAfter(buttonOpts.addAfter, 'emoticons', this.opts.curLang.emoticons, callback)
                 } else if (buttonOpts.addBefore) {
-                    this.buttonAddBefore(buttonOpts.addBefore, 'emoticons', RLANG.emoticons, callback);
+                    this.buttonAddBefore(buttonOpts.addBefore, 'emoticons', this.opts.curLang.emoticons, callback);
                 } else {
-                    this.buttonAdd('emoticons', RLANG.emoticons, callback);
+                    this.buttonAdd('emoticons', this.opts.curLang.emoticons, callback);
                 }
         }
 
@@ -90,11 +90,11 @@ RedactorPlugins.emoticons = {
         }
 
         modal += '</ul>';
-        modal += '<small class="redactor-emoticon-help">' + RLANG.emoticons_help + '</small>';
+        modal += '<small class="redactor-emoticon-help">' + this.opts.curLang.emoticons_help + '</small>';
         modal += '</div>';
 
         var that = this;
-        this.modalInit(RLANG.emoticons, modal, 300, function() {
+        this.modalInit(this.opts.curLang.emoticons, modal, 300, function() {
             $('#emoticon_drawer img').click(function() {
                 that.bufferSet();
                 that.insertHtml('<img src="' + $(this).attr('src') + '" alt="' + $(this).attr('alt') + '" title="' + $(this).attr('title') + '">');
