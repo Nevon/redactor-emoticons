@@ -93,9 +93,12 @@ RedactorPlugins.emoticons = {
         modal += '<small class="redactor-emoticon-help">' + this.opts.curLang.emoticons_help + '</small>';
         modal += '</div>';
 
+        this.selectionSave();
+
         var that = this;
         this.modalInit(this.opts.curLang.emoticons, modal, 300, function() {
             $('#emoticon_drawer img').click(function() {
+                that.selectionRestore();
                 that.bufferSet();
                 that.insertHtml('<img src="' + $(this).attr('src') + '" alt="' + $(this).attr('alt') + '" title="' + $(this).attr('title') + '">');
                 that.modalClose();
