@@ -21,6 +21,10 @@ RedactorPlugins.emoticons = {
 
         var that = this;
 
+        if (typeof(this.opts.emoticons.show_help) === 'undefined') {
+            this.opts.emoticons.show_help = true;
+        }
+
         var buttonOpts = this.opts.emoticons.button || {};
 
         // choose the view type: modal window or dropdown box
@@ -90,7 +94,8 @@ RedactorPlugins.emoticons = {
         }
 
         modal += '</ul>';
-        modal += '<small class="redactor-emoticon-help">' + this.opts.curLang.emoticons_help + '</small>';
+        if (this.opts.emoticons.show_help)
+          modal += '<small class="redactor-emoticon-help">' + this.opts.curLang.emoticons_help + '</small>';
         modal += '</div>';
 
         this.selectionSave();
