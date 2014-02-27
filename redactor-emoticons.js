@@ -3,7 +3,6 @@
  * Copyright (c) 2013 Tommy Brunn (tommy.brunn@gmail.com)
  * https://github.com/Nevon/redactor-emoticons
  */
-var RLANG = {};
 
 if (typeof RedactorPlugins === 'undefined') {
     var RedactorPlugins = {};
@@ -12,14 +11,19 @@ if (typeof RedactorPlugins === 'undefined') {
 RedactorPlugins.emoticons = {
     init: function() {
         "use strict";
-        if (typeof(RLANG.emoticons) === 'undefined') {
-            RLANG.emoticons = 'Insert emoticon';
+
+        if (typeof(this.opts.curLang.emoticons) === 'undefined') {
+            this.opts.curLang.emoticons = 'Insert emoticon';
         }
-        if (typeof(RLANG.emoticons_help) === 'undefined') {
-            RLANG.emoticons_help = 'Hover over an emoticon to see its shortcode. Type in the shortcode, select the text and press the emoticon button to convert it automatically.';
+        if (typeof(this.opts.curLang.emoticons_help) === 'undefined') {
+            this.opts.curLang.emoticons_help = 'Hover over an emoticon to see its shortcode. Type in the shortcode, select the text and press the emoticon button to convert it automatically.';
         }
 
         var that = this;
+
+        if (typeof(this.opts.emoticons.show_help) === 'undefined') {
+            this.opts.emoticons.show_help = true;
+        }
 
         var buttonOpts = this.opts.emoticons.button || {};
 
@@ -38,11 +42,11 @@ RedactorPlugins.emoticons = {
                 }
 
                 if (buttonOpts.addAfter) {
-                    this.buttonAddAfter(buttonOpts.addAfter, 'emoticons', RLANG.emoticons, null, mylist);
+                    this.buttonAddAfter(buttonOpts.addAfter, 'emoticons', this.opts.curLang.emoticons, null, mylist);
                 } else if (buttonOpts.addBefore) {
-                    this.buttonAddBefore(buttonOpts.addBefore, 'emoticons', RLANG.emoticons, null, mylist);
+                    this.buttonAddBefore(buttonOpts.addBefore, 'emoticons', this.opts.curLang.emoticons, null, mylist);
                 } else {
-                    this.buttonAdd('emoticons', RLANG.emoticons, null, mylist);
+                    this.buttonAdd('emoticons', this.opts.curLang.emoticons, null, mylist);
                 }
 
                 break
@@ -54,26 +58,16 @@ RedactorPlugins.emoticons = {
                 }
 
                 if (buttonOpts.addAfter) {
-                    this.buttonAddAfter(buttonOpts.addAfter, 'emoticons', RLANG.emoticons, callback)
+                    this.buttonAddAfter(buttonOpts.addAfter, 'emoticons', this.opts.curLang.emoticons, callback)
                 } else if (buttonOpts.addBefore) {
-                    this.buttonAddBefore(buttonOpts.addBefore, 'emoticons', RLANG.emoticons, callback);
+                    this.buttonAddBefore(buttonOpts.addBefore, 'emoticons', this.opts.curLang.emoticons, callback);
                 } else {
-                    this.buttonAdd('emoticons', RLANG.emoticons, callback);
+                    this.buttonAdd('emoticons', this.opts.curLang.emoticons, callback);
                 }
         }
 
-        //Add a separator before the button
-        if (buttonOpts.separatorBefore) {
-            this.buttonAddSeparatorBefore('emoticons')
-        }
-
-        //Add a separator after the button
-        if (buttonOpts.separatorAfter) {
-            this.buttonAddSeparatorAfter('emoticons');
-        }
-
         //Add icon to button
-        $('a.redactor_btn_emoticons').css({
+        $('a.re-emoticons').css({
             backgroundImage: ' url(data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABgAAAAYCAYAAADgdz34AAAABmJLR0QA/wD/AP+gvaeTAAAACXBIWXMAAAsTAAALEwEAmpwYAAAAB3RJTUUH3QIXFAkhU/45rAAAAlNJREFUSMftVT1oU1EYPefF16QxKkkKkZqWd2+wwQhWEAQnB9G1FQfRzVF0UxfxZ7CDs1IRHYq6VEVRRCg4iRWnUAdbMZT70lpTWtGKYPPSJ+9zeS0lWH3VSem3XO695/sO5+O75wJr8d8Ho4Acx9lL8gjJbhHZCGAGwIsgCAYmJiaqv8qN/abwpnQ6fZfkSZLPReS2iNyzLOstgJ0k+zOZjMzNzb1ctYJisZjyfX9YRF57nnd8enq63owpFAqFIAgekxwyxpxeVe+UUreUUoPh1iqVSnaTuni45pRS77XWvT+rY63Qmi4APbZtnwjJhuv1+lR7e3smvD9gWdY3rXVftVqdEZFTItIXmcCyrF6STyqVyqfwKA4gnkgkYgBA0g5z4wCQzWYfktyilNoaiQBAUURGliYhFtvT0tKSN8Z8BADXdZ96ntdmjDkDAOVy+buIjALoai60bgWCOIDG4mZ8fHwBwMJyQK1W+9yU4wFIRFIgIh9IqkVMPp9PrDRpS+NIahGZitqiZyLSA8DSWp+3bftBLpdLLgd0dnZu833/ndZ6l+M43QDS2Wy2HPUdUGs9IiI35+fnB5LJ5B0Au0kOApgVke0ADpI8Z4zp11oPicgr13UvRlUgJI+RvJRKpfa7rnsIwFEACyKiSI6KyA5jzDWt9VURSXued3nVXhR60H2SjwBcMca8AYBSqWQ3Go19QRBcCKG9ruvO/pHZOY6TI3mW5GERWU/yq4i0AagAuN7a2npjbGzM/ys3XcR2dHRsjsViG4IgmJ2cnPyy9hn9G/EDW0nlPvgF9JwAAAAASUVORK5CYII=)'
         });
 
@@ -90,14 +84,18 @@ RedactorPlugins.emoticons = {
         }
 
         modal += '</ul>';
-        modal += '<small class="redactor-emoticon-help">' + RLANG.emoticons_help + '</small>';
+        if (this.opts.emoticons.show_help)
+          modal += '<small class="redactor-emoticon-help">' + this.opts.curLang.emoticons_help + '</small>';
         modal += '</div>';
 
+        this.selectionSave();
+
         var that = this;
-        this.modalInit(RLANG.emoticons, modal, 300, function() {
+        this.modalInit(this.opts.curLang.emoticons, modal, 300, function() {
             $('#emoticon_drawer img').click(function() {
+                that.selectionRestore();
                 that.bufferSet();
-                that.insertHtml('<img src="' + $(this).attr('src') + '" alt="' + $(this).attr('alt') + '">');
+                that.insertHtml('<img src="' + $(this).attr('src') + '" alt="' + $(this).attr('alt') + '" title="' + $(this).attr('title') + '">');
                 that.modalClose();
             });
         });
@@ -119,7 +117,7 @@ RedactorPlugins.emoticons = {
             var pattern = new RegExp('(' + smileyStr + ')', 'g');
 
             //Perform the match twice. Once to count number of
-            //occurrences, and once to do the replace. 
+            //occurrences, and once to do the replace.
             numberOfMatches += (html.match(pattern) || []).length;
             html = html.replace(pattern, '<img src="' + this.opts.emoticons.items[i].src + '" alt="' + this.opts.emoticons.items[i].name + '">');
         }
